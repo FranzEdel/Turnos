@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Turnos.Models
@@ -14,5 +15,8 @@ namespace Turnos.Models
         public string Email { get; set; }
         public DateTime HoraAtencionDesde { get; set; }
         public DateTime HoraAtencionHasta { get; set; }
+
+
+        public List<MedicoEspecialidad> MedicoEspecialdiad { get; set; }
     }
 }
