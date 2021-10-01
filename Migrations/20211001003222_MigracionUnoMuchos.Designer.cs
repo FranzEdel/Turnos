@@ -10,8 +10,8 @@ using Turnos.Data;
 namespace Turnos.Migrations
 {
     [DbContext(typeof(TurnosContext))]
-    [Migration("20210929004200_MigracionME")]
-    partial class MigracionME
+    [Migration("20211001003222_MigracionUnoMuchos")]
+    partial class MigracionUnoMuchos
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,6 +72,9 @@ namespace Turnos.Migrations
                         .HasColumnType("datetime2")
                         .IsUnicode(false);
 
+                    b.Property<int>("IdEspecialidad")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("varchar(50)")
@@ -86,22 +89,9 @@ namespace Turnos.Migrations
 
                     b.HasKey("IdMedico");
 
-                    b.ToTable("Medicos");
-                });
-
-            modelBuilder.Entity("Turnos.Models.MedicoEspecialidad", b =>
-                {
-                    b.Property<int>("IdMedico")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdEspecialidad")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdMedico", "IdEspecialidad");
-
                     b.HasIndex("IdEspecialidad");
 
-                    b.ToTable("MedicoEspecialidads");
+                    b.ToTable("Medicos");
                 });
 
             modelBuilder.Entity("Turnos.Models.Paciente", b =>
@@ -146,17 +136,11 @@ namespace Turnos.Migrations
                     b.ToTable("Pacientes");
                 });
 
-            modelBuilder.Entity("Turnos.Models.MedicoEspecialidad", b =>
+            modelBuilder.Entity("Turnos.Models.Medico", b =>
                 {
                     b.HasOne("Turnos.Models.Especialidad", "Especialidad")
-                        .WithMany("MedicoEspecialdiad")
+                        .WithMany("MedicoLista")
                         .HasForeignKey("IdEspecialidad")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Turnos.Models.Medico", "Medico")
-                        .WithMany("MedicoEspecialdiad")
-                        .HasForeignKey("IdMedico")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

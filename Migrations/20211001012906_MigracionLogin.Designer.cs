@@ -10,8 +10,8 @@ using Turnos.Data;
 namespace Turnos.Migrations
 {
     [DbContext(typeof(TurnosContext))]
-    [Migration("20210924011117_Modelos")]
-    partial class Modelos
+    [Migration("20211001012906_MigracionLogin")]
+    partial class MigracionLogin
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -37,6 +37,28 @@ namespace Turnos.Migrations
                     b.HasKey("IdEspecialidad");
 
                     b.ToTable("Especialidades");
+                });
+
+            modelBuilder.Entity("Turnos.Models.Login", b =>
+                {
+                    b.Property<int>("IdLogin")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("Usuario")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.HasKey("IdLogin");
+
+                    b.ToTable("Login");
                 });
 
             modelBuilder.Entity("Turnos.Models.Medico", b =>
@@ -72,6 +94,9 @@ namespace Turnos.Migrations
                         .HasColumnType("datetime2")
                         .IsUnicode(false);
 
+                    b.Property<int>("IdEspecialidad")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("varchar(50)")
@@ -85,6 +110,8 @@ namespace Turnos.Migrations
                         .IsUnicode(false);
 
                     b.HasKey("IdMedico");
+
+                    b.HasIndex("IdEspecialidad");
 
                     b.ToTable("Medicos");
                 });
@@ -129,6 +156,58 @@ namespace Turnos.Migrations
                     b.HasKey("IdPaciente");
 
                     b.ToTable("Pacientes");
+                });
+
+            modelBuilder.Entity("Turnos.Models.Turno", b =>
+                {
+                    b.Property<int>("IdMedico")
+                        .HasColumnType("int")
+                        .IsUnicode(false);
+
+                    b.Property<DateTime>("FechaHoraFin")
+                        .HasColumnType("datetime2")
+                        .IsUnicode(false);
+
+                    b.Property<DateTime>("FechaHoraInicio")
+                        .HasColumnType("datetime2")
+                        .IsUnicode(false);
+
+                    b.Property<int>("IdPaciente")
+                        .HasColumnType("int")
+                        .IsUnicode(false);
+
+                    b.Property<int>("IdTurno")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdMedico");
+
+                    b.HasIndex("IdPaciente");
+
+                    b.ToTable("Turnos");
+                });
+
+            modelBuilder.Entity("Turnos.Models.Medico", b =>
+                {
+                    b.HasOne("Turnos.Models.Especialidad", "Especialidad")
+                        .WithMany("MedicoLista")
+                        .HasForeignKey("IdEspecialidad")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Turnos.Models.Turno", b =>
+                {
+                    b.HasOne("Turnos.Models.Medico", "Medico")
+                        .WithMany("TurnoLista")
+                        .HasForeignKey("IdMedico")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Turnos.Models.Paciente", "Paciente")
+                        .WithMany("TurnoLista")
+                        .HasForeignKey("IdPaciente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

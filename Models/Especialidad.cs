@@ -9,6 +9,6 @@ namespace Turnos.Models
         public int IdEspecialidad { get; set; }
         public string Descripcion { get; set; }
 
-        public List<MedicoEspecialidad> MedicoEspecialdiad { get; set; }
+        public ICollection<Medico> MedicoLista { get; set; }
     }
 }

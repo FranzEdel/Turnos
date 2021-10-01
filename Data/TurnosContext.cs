@@ -11,8 +11,8 @@ namespace Turnos.Data
         public DbSet<Especialidad> Especialidad { get; set; }
         public DbSet<Paciente> Paciente { get; set; }
         public DbSet<Medico> Medico { get; set; }
-
-        public DbSet<MedicoEspecialidad> MedicoEspecialidads { get; set; }
+        public DbSet<Turno> Turno { get; set; }
+        public DbSet<Login> Login { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -102,15 +102,57 @@ namespace Turnos.Data
                 .IsUnicode(false);
             });
 
-            modelBuilder.Entity<MedicoEspecialidad>().HasKey(x => new { x.IdMedico, x.IdEspecialidad });
+            modelBuilder.Entity<Medico>().HasOne(x => x.Especialidad)
+            .WithMany(p => p.MedicoLista)
+            .HasForeignKey(p => p.IdEspecialidad);
 
-            modelBuilder.Entity<MedicoEspecialidad>().HasOne(x => x.Medico)
-            .WithMany(p => p.MedicoEspecialdiad)
+
+            modelBuilder.Entity<Turno>(entidad =>
+            {
+                entidad.ToTable("Turnos");
+
+                entidad.HasKey(t => t.IdMedico);
+
+                entidad.Property(t => t.IdPaciente)
+                .IsRequired()
+                .IsUnicode(false);
+
+                entidad.Property(t => t.IdMedico)
+                .IsRequired()
+                .IsUnicode(false);
+
+                entidad.Property(t => t.FechaHoraInicio)
+                .IsRequired()
+                .IsUnicode(false);
+
+                entidad.Property(t => t.FechaHoraFin)
+                .IsRequired()
+                .IsUnicode(false);
+            });
+
+
+            modelBuilder.Entity<Turno>().HasOne(x => x.Paciente)
+            .WithMany(p => p.TurnoLista)
+            .HasForeignKey(p => p.IdPaciente);
+
+            modelBuilder.Entity<Turno>().HasOne(x => x.Medico)
+            .WithMany(p => p.TurnoLista)
             .HasForeignKey(p => p.IdMedico);
 
-            modelBuilder.Entity<MedicoEspecialidad>().HasOne(x => x.Especialidad)
-            .WithMany(p => p.MedicoEspecialdiad)
-            .HasForeignKey(p => p.IdEspecialidad);
+            modelBuilder.Entity<Login>(entidad =>
+            {
+                entidad.ToTable("Login");
+
+                entidad.HasKey(l => l.IdLogin);
+
+                entidad.Property(l => l.Usuario)
+                .IsRequired()
+                .HasMaxLength(20);
+
+                entidad.Property(l => l.Password)
+                .IsRequired()
+                .HasMaxLength(250);
+            });
         }
     }
 }
