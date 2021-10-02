@@ -100,6 +100,10 @@ namespace Turnos.Data
                 entidad.Property(m => m.HoraAtencionHasta)
                 .IsRequired()
                 .IsUnicode(false);
+
+                entidad.Property(m => m.IdEspecialidad)
+                .IsRequired()
+                .IsUnicode(false);
             });
 
             modelBuilder.Entity<Medico>().HasOne(x => x.Especialidad)
@@ -111,7 +115,7 @@ namespace Turnos.Data
             {
                 entidad.ToTable("Turnos");
 
-                entidad.HasKey(t => t.IdMedico);
+                entidad.HasKey(t => t.IdTurno);
 
                 entidad.Property(t => t.IdPaciente)
                 .IsRequired()

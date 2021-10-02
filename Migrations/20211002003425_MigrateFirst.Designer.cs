@@ -10,8 +10,8 @@ using Turnos.Data;
 namespace Turnos.Migrations
 {
     [DbContext(typeof(TurnosContext))]
-    [Migration("20211001012906_MigracionLogin")]
-    partial class MigracionLogin
+    [Migration("20211002003425_MigrateFirst")]
+    partial class MigrateFirst
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -95,7 +95,8 @@ namespace Turnos.Migrations
                         .IsUnicode(false);
 
                     b.Property<int>("IdEspecialidad")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .IsUnicode(false);
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -160,9 +161,10 @@ namespace Turnos.Migrations
 
             modelBuilder.Entity("Turnos.Models.Turno", b =>
                 {
-                    b.Property<int>("IdMedico")
+                    b.Property<int>("IdTurno")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .IsUnicode(false);
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("FechaHoraFin")
                         .HasColumnType("datetime2")
@@ -172,14 +174,17 @@ namespace Turnos.Migrations
                         .HasColumnType("datetime2")
                         .IsUnicode(false);
 
+                    b.Property<int>("IdMedico")
+                        .HasColumnType("int")
+                        .IsUnicode(false);
+
                     b.Property<int>("IdPaciente")
                         .HasColumnType("int")
                         .IsUnicode(false);
 
-                    b.Property<int>("IdTurno")
-                        .HasColumnType("int");
+                    b.HasKey("IdTurno");
 
-                    b.HasKey("IdMedico");
+                    b.HasIndex("IdMedico");
 
                     b.HasIndex("IdPaciente");
 

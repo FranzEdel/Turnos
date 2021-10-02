@@ -14472,6 +14472,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/Views/Login/Index.cshtml",
+      "TargetPath": "Views\\Login\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/Views/Paciente/Delete.cshtml",
       "TargetPath": "Views\\Paciente\\Delete.cshtml",
       "FileKind": "mvc"

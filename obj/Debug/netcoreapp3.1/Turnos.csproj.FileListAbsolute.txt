@@ -163,3 +163,4 @@
 /media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/obj/Debug/netcoreapp3.1/Razor/Views/Paciente/Details.cshtml.g.cs
 /media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/obj/Debug/netcoreapp3.1/Razor/Views/Paciente/Edit.cshtml.g.cs
 /media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/obj/Debug/netcoreapp3.1/Razor/Views/Paciente/Index.cshtml.g.cs
+/media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/obj/Debug/netcoreapp3.1/Razor/Views/Login/Index.cshtml.g.cs

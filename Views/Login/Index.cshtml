@@ -1,0 +1,39 @@
+@model Turnos.Models.Login
+
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Login">
+                <div asp-validation-summary="ModelOnly"></div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Usuario">Usuario</label>
+                        <input asp-for="Usuario" type="text" class="form-control">
+                        <span asp-validation-for="Usuario"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Password">Password</label>
+                        <input asp-for="Password" type="Password" class="form-control">
+                        <span asp-validation-for="Password"></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>

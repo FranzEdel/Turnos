@@ -10,3 +10,7 @@ INSERT INTO Medicos VALUES('Juan','Lopez','Junin #100','11223344','juan@mail.com
 
 SELECT * FROM Especialidades e JOIN Medicos m ON e.IdEspecialidad = m.IdMedico
 WHERE m.IdMedico = 3
+
+--
+INSERT INTO [Login] VALUES('admin',CONVERT(VARCHAR(128),HASHBYTES('SHA2_256','admin'),2))
+SELECT * FROM [Login]
