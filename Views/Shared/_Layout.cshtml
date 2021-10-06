@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    if (Context.Session.GetString("usuario") == null)
+    {
+        Context.Response.Redirect("/Login");
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -39,6 +47,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Medico"
                                 asp-action="Index">Medicos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Cerrar
+                                Sesión</a>
                         </li>
                     </ul>
                 </div>

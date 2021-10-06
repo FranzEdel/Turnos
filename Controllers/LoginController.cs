@@ -30,6 +30,7 @@ namespace Turnos.Controllers
 
             if (loginUsuario != null)
             {
+                HttpContext.Session.SetString("usuario", loginUsuario.Usuario);
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -56,5 +57,13 @@ namespace Turnos.Controllers
                 return stringBuilder.ToString();
             }
         }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+
+            return View("Index");
+        }
+
     }
 }
