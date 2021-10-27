@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Turnos.Migrations
 {
-    public partial class MigrateFirst : Migration
+    public partial class MigracionFirst : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

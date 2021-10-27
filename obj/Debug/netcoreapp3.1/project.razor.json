@@ -14462,6 +14462,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/Views/Turno/Index.cshtml",
+      "TargetPath": "Views\\Turno\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/Views/Paciente/Index.cshtml",
       "TargetPath": "Views\\Paciente\\Index.cshtml",
       "FileKind": "mvc"
@@ -14509,11 +14514,6 @@
     {
       "FilePath": "/media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/Views/Shared/Error.cshtml",
       "TargetPath": "Views\\Shared\\Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/Views/Especialidad/Details.cshtml",
-      "TargetPath": "Views\\Especialidad\\Details.cshtml",
       "FileKind": "mvc"
     }
   ],

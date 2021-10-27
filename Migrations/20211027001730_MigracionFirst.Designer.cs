@@ -10,8 +10,8 @@ using Turnos.Data;
 namespace Turnos.Migrations
 {
     [DbContext(typeof(TurnosContext))]
-    [Migration("20211002003425_MigrateFirst")]
-    partial class MigrateFirst
+    [Migration("20211027001730_MigracionFirst")]
+    partial class MigracionFirst
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

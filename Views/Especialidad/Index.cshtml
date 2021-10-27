@@ -1,57 +1,41 @@
 @model IEnumerable<Turnos.Models.Especialidad>
 
-
-<!DOCTYPE html>
-
-<html>
-
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-
-<body>
-    <p>
-        <a asp-action="Create" class="btn-floating btn-large green darken-2">
-            <i class="material-icons">person_add_alt</i>
-        </a>
-    </p>
+<p>
+    <a asp-action="Create" class="btn-floating btn-large green darken-2">
+        <i class="material-icons">person_add_alt</i>
+    </a>
+</p>
 
 
-    <table class="responsive-table highlight z-depth-4 purple lighten-5">
-        <thead class="purple darken-1 white-text">
+<table class="responsive-table highlight z-depth-4 teal lighten-5">
+    <thead class="purple teal darken-3 white-text">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+
+            <th>
+                Acciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Descripcion)
-                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IdEspecialidad">
+                        <i class="material-icons">edit</i>
+                    </a>
 
-                <th>
-                    Acciones
-                </th>
+                    <a asp-action="Delete" asp-route-id="@item.IdEspecialidad">
+                        <i class="material-icons red-text">delete_forever</i>
+                    </a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descripcion)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.IdEspecialidad">
-                            <i class="material-icons">edit</i>
-                        </a>
-                        <a asp-action="Details" asp-route-id="@item.IdEspecialidad">
-                            <i class="material-icons grey-text">visibility</i>
-                        </a>
-                        <a asp-action="Delete" asp-route-id="@item.IdEspecialidad">
-                            <i class="material-icons red-text">delete_forever</i>
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</body>
-
-</html>
+        }
+    </tbody>
+</table>

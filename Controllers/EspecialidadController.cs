@@ -25,24 +25,6 @@ namespace Turnos.Controllers
             return View(await _context.Especialidad.ToListAsync());
         }
 
-        // GET: Especialidad/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var especialidad = await _context.Especialidad
-                .FirstOrDefaultAsync(m => m.IdEspecialidad == id);
-            if (especialidad == null)
-            {
-                return NotFound();
-            }
-
-            return View(especialidad);
-        }
-
         // GET: Especialidad/Create
         public IActionResult Create()
         {
