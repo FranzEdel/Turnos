@@ -28,10 +28,10 @@ namespace Turnos.Controllers
             return View();
         }
 
-        public JsonResult obtenerTurnos(int idMedico)
+        public JsonResult obtenerTurnos(int idMedico, int idPaciente)
         {
             List<Turno> turnos = new List<Turno>();
-            turnos = _context.Turno.Where(t => t.IdMedico == idMedico).ToList();
+            turnos = _context.Turno.Where(t => t.IdMedico == idMedico && t.IdPaciente == idPaciente).ToList();
 
             return Json(turnos);
         }
@@ -79,6 +79,13 @@ namespace Turnos.Controllers
 
             var jsonResult = new { ok = ok };
             return Json(jsonResult);
+        }
+
+        public JsonResult Aumento(int numero)
+        {
+            int total = numero + 10;
+
+            return Json(total);
         }
     }
 }
