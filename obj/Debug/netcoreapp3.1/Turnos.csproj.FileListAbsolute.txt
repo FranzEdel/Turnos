@@ -164,3 +164,4 @@
 /media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/obj/Debug/netcoreapp3.1/Razor/Views/Paciente/Index.cshtml.g.cs
 /media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/obj/Debug/netcoreapp3.1/Razor/Views/Login/Index.cshtml.g.cs
 /media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/obj/Debug/netcoreapp3.1/Razor/Views/Turno/Index.cshtml.g.cs
+/media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/obj/Debug/netcoreapp3.1/Razor/Views/Shared/_notificationPartial.cshtml.g.cs

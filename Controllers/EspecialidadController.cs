@@ -10,7 +10,7 @@ using Turnos.Models;
 
 namespace Turnos.Controllers
 {
-    public class EspecialidadController : Controller
+    public class EspecialidadController : NotificationController
     {
         private readonly TurnosContext _context;
 
@@ -42,6 +42,7 @@ namespace Turnos.Controllers
             {
                 _context.Add(especialidad);
                 await _context.SaveChangesAsync();
+                Notify("Especialidad guardada", "Correcto!!", NotificationType.success);
                 return RedirectToAction(nameof(Index));
             }
             return View(especialidad);
@@ -81,6 +82,7 @@ namespace Turnos.Controllers
                 {
                     _context.Update(especialidad);
                     await _context.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -93,6 +95,7 @@ namespace Turnos.Controllers
                         throw;
                     }
                 }
+                Notify("Especialidad actualizada", "Correcto!!", NotificationType.success);
                 return RedirectToAction(nameof(Index));
             }
             return View(especialidad);
@@ -121,9 +124,18 @@ namespace Turnos.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var especialidad = await _context.Especialidad.FindAsync(id);
-            _context.Especialidad.Remove(especialidad);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var especialidad = await _context.Especialidad.FindAsync(id);
+                _context.Especialidad.Remove(especialidad);
+                await _context.SaveChangesAsync();
+                Notify("Especialidad eliminada", "Correcto!!", NotificationType.success);
+            }
+            catch (Exception)
+            {
+                Notify("No se pudo eliminar la Especialidad", "Error!!", NotificationType.error);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

@@ -1,0 +1,18 @@
+<script>
+    var msg = @(TempData["Message"]!=null? Html.Raw(TempData["Message"]) : Html.Raw("undefined"));
+
+    //console.log(msg)
+
+    if (msg) {
+        if (msg.provider == "sweetAlert") {
+            swal.fire({
+                position: 'center',
+                title: msg.title,
+                text: msg.message,
+                icon: msg.icon,
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
+    }
+</script>

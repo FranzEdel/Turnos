@@ -14497,6 +14497,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "/media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/Views/Shared/_notificationPartial.cshtml",
+      "TargetPath": "Views\\Shared\\_notificationPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "/media/franzedel/Archivos y Tutoriales/Zoom/Programacion II/Codigos/Turnos/Views/Medico/Details.cshtml",
       "TargetPath": "Views\\Medico\\Details.cshtml",
       "FileKind": "mvc"

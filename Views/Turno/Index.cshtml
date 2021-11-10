@@ -1,5 +1,5 @@
 @model Turnos.Models.Turno
-
+@Html.AntiForgeryToken()
 @{
     ViewBag.Title = "Asignación de Turnos";
 }
@@ -19,22 +19,41 @@
 
 <div id="ModalTurno" class="modal">
     <div class="modal-content">
-        <h4>Turno</h4>
-        <form>
-            <div>
-                <label>Inicio</label>
-                <input type="text" id="txtFechaHoraInicio" readonly="readonly">
-            </div>
-            <div>
-                <label>Fin</label>
-                <input type="text" id="txtFechaHoraFin" readonly="readonly">
-            </div>
-        </form>
+        <h4 class="brown lighten-4">Turno</h4>
+
+        <div class="row">
+            <form class="col s12">
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col s6">
+                        <label><i class="tiny material-icons prefix">assignment_ind</i> Paciente</label>
+                        <input type="text" id="txtPaciente" readonly="readonly">
+                    </div>
+                    <div class="col s6">
+                        <label><i class="tiny material-icons prefix">medication</i> Médico</label>
+                        <input type="text" id="txtMedico" readonly="readonly">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s6">
+                        <label><i class="tiny material-icons prefix">event_note</i> Hora inicio</label>
+                        <input type="text" id="txtFechaHoraInicio" readonly="readonly">
+                    </div>
+                    <div class="col s6">
+                        <label><i class="tiny material-icons prefix">event_note</i> Hora fin</label>
+                        <input type="text" id="txtFechaHoraFin" readonly="readonly">
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
     </div>
-    <div class="modal-footer">
-        <a href="#" id="btnEliminar" class="modal-close waves-effect waves-red btn-flat">Eliminar</a>
-        <a href="#" id="btnGuardar" class="modal-close waves-effect waves-green btn-flat">Guardar</a>
-        <a href="#" id="btnCerrar" class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
+
+    <div class="modal-footer blue-grey darken-2">
+        <a href="#" id="btnEliminar" class="modal-close waves-effect red btn">Eliminar</a>
+        <a href="#" id="btnGuardar" class="modal-close btn waves-effect waves-light">Guardar</a>
+        <a href="#" id="btnCerrar" class="modal-close waves-effect grey btn">Cerrar</a>
     </div>
 </div>
 
@@ -84,7 +103,9 @@
                             idPaciente: v.idPaciente,
                             idMedico: v.idMedico,
                             start: moment(v.fechaHoraInicio),
-                            end: v.fechaHoraFin != null ? moment(v.fechaHoraFin) : null
+                            end: v.fechaHoraFin != null ? moment(v.fechaHoraFin) : null,
+                            paciente: v.paciente,
+                            medico: v.medico
                         });
                     });
                     GenerarCalendario(turnos);
@@ -161,6 +182,8 @@
         function AbrirPopup() {
             $('#txtFechaHoraInicio').val(turnoSeleccionado.start.format('DD/MM/YYYY HH:mm'));
             $('#txtFechaHoraFin').val(turnoSeleccionado.end.format('DD/MM/YYYY HH:mm'));
+            $('#txtPaciente').val($('#IdPaciente option:selected').text());
+            $('#txtMedico').val($('#IdMedico option:selected').text());
 
             if (turnoSeleccionado.idTurno == 0) {
                 $('#btnGuardar').show()
@@ -176,8 +199,8 @@
 
         $('#btnGuardar').click(function () {
             var datosDelTurno = {
-                IdPaciente: parseInt($('#IdPaciente').val()),
-                IdMedico: parseInt($('#IdMedico').val()),
+                IdPaciente: $('#IdPaciente').val(),
+                IdMedico: $('#IdMedico').val(),
                 FechaHoraInicio: $('#txtFechaHoraInicio').val(),
                 FechaHoraFin: $('#txtFechaHoraFin').val()
             };
@@ -190,34 +213,81 @@
                 type: "POST",
                 url: "Turno/GrabarTurno",
                 data: { "turno": turno },
+                headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
                 success: function (respuesta) {
                     if (respuesta.ok) {
-                        ObtenerTurnosYActualizar($('#IdMedico').val());
+                        Swal.fire({
+                            position: 'center',
+                            title: 'Correcto!!!',
+                            text: 'Turno guardado correctamente',
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 3000
+                        }).then((result) => {
+                            ObtenerTurnosYActualizar($('#IdMedico').val(), $('#IdPaciente').val());
+                        });
                     }
                 },
                 error: function () {
-                    alert("Error al guardar el Turno");
+                    Swal.fire({
+                        position: 'center',
+                        title: 'Error!',
+                        text: 'No se pudo guardar el Turno',
+                        icon: 'error',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
                 }
 
             });
         }
 
         $('#btnEliminar').click(function () {
-            if (confirm('¿Esta seguro que desea eliminar el Turno?')) {
-                $.ajax({
-                    type: "POST",
-                    url: "Turno/EliminarTurno",
-                    data: { 'IdTurno': turnoSeleccionado.idTurno },
-                    success: function (resultado) {
-                        if (sultado.ok) {
-                            ObtenerTurnosYActualizar($('#IdMedico').val(), $('#IdPaciente').val());
+            Swal.fire({
+                title: '¿Esta seguro?',
+                text: "El Turno se eliminar definitivamente!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si, Eliminar!',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    $.ajax({
+                        type: "POST",
+                        url: "Turno/EliminarTurno",
+                        data: { 'IdTurno': turnoSeleccionado.idTurno },
+                        headers: { 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val() },
+                        success: function (resultado) {
+                            if (resultado.ok) {
+                                Swal.fire({
+                                    position: 'center',
+                                    title: 'Eliminado!',
+                                    text: 'Turno eliminado correctamente',
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                }).then((result) => {
+                                    ObtenerTurnosYActualizar($('#IdMedico').val(), $('#IdPaciente').val());
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                position: 'center',
+                                title: 'Error!',
+                                text: 'No se pudo eliminar el Turno',
+                                icon: 'error',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
                         }
-                    },
-                    error: function () {
-                        alert("Error al eliminar el Turno");
-                    }
-                });
-            }
+                    });
+
+                }
+            })
         });
 
     })

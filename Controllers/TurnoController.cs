@@ -30,8 +30,21 @@ namespace Turnos.Controllers
 
         public JsonResult obtenerTurnos(int idMedico, int idPaciente)
         {
-            List<Turno> turnos = new List<Turno>();
-            turnos = _context.Turno.Where(t => t.IdMedico == idMedico && t.IdPaciente == idPaciente).ToList();
+            /* List<Turno> turnos = new List<Turno>();
+            turnos = _context.Turno.Where(t => t.IdMedico == idMedico && t.IdPaciente == idPaciente).ToList(); */
+            var turnos = _context.Turno.Where(t => t.IdMedico == idMedico && t.IdPaciente == idPaciente)
+            .Select(t => new
+            {
+                t.IdTurno,
+                t.IdMedico,
+                t.IdPaciente,
+                t.FechaHoraInicio,
+                t.FechaHoraFin,
+                paciente = t.Paciente.Nombre + " " + t.Paciente.Apellido,
+                medico = t.Medico.Nombre + " " + t.Medico.Apellido
+            })
+            .ToList();
+
 
             return Json(turnos);
         }
@@ -39,6 +52,7 @@ namespace Turnos.Controllers
         [HttpPost]
         public JsonResult GrabarTurno(Turno turno)
         {
+            //return Json(turno);
             var ok = false;
             try
             {
@@ -81,11 +95,5 @@ namespace Turnos.Controllers
             return Json(jsonResult);
         }
 
-        public JsonResult Aumento(int numero)
-        {
-            int total = numero + 10;
-
-            return Json(total);
-        }
     }
 }
